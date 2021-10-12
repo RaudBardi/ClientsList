@@ -38,12 +38,6 @@
           loading-text="Загрузка..."
           @click:row="clickRow"
         >
-          <template v-slot:item.gender="{ item }">
-            {{ item.gender === 'male' ? 'Муж.' : 'Жен.' }}
-          </template>
-          <template v-slot:item.hasFamily="{ item }">
-            {{ item.hasFamily ? 'Есть' : 'Нет' }}
-          </template>
           <template v-slot:item.photo="{ item }">
             <div
               v-if="item.photo"
@@ -57,7 +51,13 @@
                 />
               </div>
             </div>
-            <v-icon size="24px" v-else>mdi-account</v-icon>
+            <v-icon size="36px" v-else>mdi-account-circle</v-icon>
+          </template>
+          <template v-slot:item.gender="{ item }">
+            {{ item.gender === 'male' ? 'Муж.' : 'Жен.' }}
+          </template>
+          <template v-slot:item.hasFamily="{ item }">
+            {{ item.hasFamily ? 'Есть' : 'Нет' }}
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon
@@ -212,13 +212,33 @@
                           <li></li>
                         </ul>
                       </div>
-                      <div v-show="!isLoading" class="camera-box" :class="{ 'flash' : isShotPhoto }">
-                        <div class="camera-shutter" :class="{'flash' : isShotPhoto}"></div>
-                        <video v-show="!isPhotoTaken" ref="camera" :width="450" :height="337.5" autoplay></video>
-                        <canvas v-show="isPhotoTaken" id="photoTaken" ref="canvas" :width="450"
-                                :height="337.5"></canvas>
+                      <div v-show="!isLoading"
+                           class="camera-box"
+                           :class="{ 'flash' : isShotPhoto }"
+                      >
+                        <div
+                          class="camera-shutter"
+                          :class="{'flash' : isShotPhoto}"
+                        />
+                        <video
+                          v-show="!isPhotoTaken"
+                          ref="camera"
+                          :width="450"
+                          :height="337.5"
+                          autoplay
+                        ></video>
+                        <canvas
+                          v-show="isPhotoTaken"
+                          id="photoTaken"
+                          ref="canvas"
+                          :width="450"
+                          :height="337.5"
+                        ></canvas>
                       </div>
-                      <div v-if="!isLoading" class="camera-shoot">
+                      <div
+                        v-if="!isLoading"
+                        class="camera-shoot"
+                      >
                         <v-btn
                           width="60px"
                           height="60px"
@@ -327,6 +347,13 @@ export default {
     headers () {
       return [
         {
+          text: '',
+          align: 'center',
+          sortable: false,
+          value: 'photo',
+          width: '50px'
+        },
+        {
           text: 'ФИО',
           align: 'start',
           sortable: true,
@@ -343,12 +370,6 @@ export default {
         {
           text: 'Есть семья',
           value: 'hasFamily'
-        },
-        {
-          text: 'Фото',
-          align: 'center',
-          sortable: false,
-          value: 'photo'
         },
         {
           text: 'Actions',
@@ -529,6 +550,8 @@ export default {
   height: 36px;
   margin: 0;
   padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .item-photo-wrap {
